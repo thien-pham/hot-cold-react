@@ -17,21 +17,21 @@ export default class Game extends React.Component {
         this.updateGuess = this.updateGuess.bind(this);
     }
     
-    updateGuess(capturedText) {
-        console.log(capturedText);
-        this.setState({guesses:[...this.state.guesses, capturedText]
+    updateGuess(e) {
+        e.preventDefault();
+        console.log(e.target.value, 'testing');
+        this.setState({guesses:[...this.state.guesses, e.target.value]
         });
     }
-
 
     render(){
     
         return (
             <div>
                 <Header />
-                <GuessSection feedback={this.state.feedback} 
-                              onChange={(capturedText) => this.updateGuess(capturedText)} />
-                              {/*onSubmit={this.updateGuess}/>*/}
+                <GuessSection feedback={this.state.feedback} test={this.updateGuess}
+                              onChangeValue={this.updateGuess}  />
+                    
                 <GuessCount count={this.state.count} />
                 {/*<GuessList guesses={this.state.guesses} />*/}
             </div>
