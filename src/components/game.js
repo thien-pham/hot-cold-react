@@ -8,16 +8,19 @@ import GuessList from './guess-list';
 export default class Game extends React.Component {
     constructor(props) {
         super(props);
-
+      
         this.state=({
             guesses: [],
             feedback: 'Make your guess!',
             count: 0
         })
+        this.updateGuess = this.updateGuess.bind(this);
     }
-
-    updateGuess(e){
-        this.setState({guesses: e});
+    
+    updateGuess(capturedText) {
+        console.log(capturedText);
+        this.setState({guesses:[...this.state.guesses, capturedText]
+        });
     }
 
 
@@ -26,10 +29,11 @@ export default class Game extends React.Component {
         return (
             <div>
                 <Header />
-                <GuessSection feedback={this.state.feedback} onSubmit={(e)=>{this.state.updateGuess(e)}}
-                    ref={input => this.input=input}/>
+                <GuessSection feedback={this.state.feedback} 
+                              onChange={(capturedText) => this.updateGuess(capturedText)} />
+                              {/*onSubmit={this.updateGuess}/>*/}
                 <GuessCount count={this.state.count} />
-                <GuessList guesses={this.state.guesses} />
+                {/*<GuessList guesses={this.state.guesses} />*/}
             </div>
         );
     }

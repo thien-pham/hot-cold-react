@@ -8,6 +8,7 @@ export default class GuessForm extends React.Component {
         e.preventDefault();
         const capturedText = this.input.value; 
         console.log(capturedText);
+        this.props.test(capturedText);
     }
     
     render() {
