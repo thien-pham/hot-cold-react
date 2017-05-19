@@ -12,15 +12,31 @@ export default class Game extends React.Component {
         this.state=({
             guesses: [],
             feedback: 'Make your guess!',
-            count: 0
+            answer: Math.floor(Math.random() * 100) + 1 
         })
         this.updateGuess = this.updateGuess.bind(this);
     }
     
-    updateGuess(e) {
-        e.preventDefault();
-        console.log(e.target.value, 'testing');
-        this.setState({guesses:[...this.state.guesses, e.target.value]
+    updateGuess(guess) {
+        let feedback;
+        const difference = Math.abs(guess - this.state.answer);
+        
+        if(guess === this.state.answer){
+            feedback='You won! Click new game to play again'
+        }
+        else if(difference <= 10){
+            feedback='hot';
+        }
+        else if (difference <= 25){
+            feedback='warm';
+        }
+        else {
+            feedback='cold';
+        }
+        
+
+        console.log(guess, 'testing');
+        this.setState({feedback, guesses:[...this.state.guesses, guess]
         });
     }
 
@@ -30,10 +46,10 @@ export default class Game extends React.Component {
             <div>
                 <Header />
                 <GuessSection feedback={this.state.feedback} test={this.updateGuess}
-                              onChangeValue={this.updateGuess}  />
+                              handleSubmit={guess=>this.updateGuess(guess)}  />
                     
-                <GuessCount count={this.state.count} />
-                {/*<GuessList guesses={this.state.guesses} />*/}
+                <GuessCount count={this.state.guesses.length} />
+                <GuessList guesses={this.state.guesses} />
             </div>
         );
     }
